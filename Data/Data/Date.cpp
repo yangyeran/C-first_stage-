@@ -5,11 +5,11 @@ using namespace std;
 int Date::GetMonthDay(int year, int month)
 {
 	//先定义一个数组存储常见的12月份的天数，在单独判断是否为闰年
-	int monthdayarray[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};//多定一个方便后续操作
+	static int monthdayarray[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};//数组不会改变，可以定义成静态
 	int day = monthdayarray[month];
 	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
 	{
-		day += 1;//只有是二月这个特殊月份才需要判断是否为闰年
+		day += 1;//只有是二月这个特殊月份才需要判断是否为闰年,所以判断可以提前
 	}
 	return day;
 }
@@ -68,23 +68,35 @@ Date& Date::operator+=(int day)
 	{
 		return *this -= (-day);
 	}
-	//要满了就进月数，月数满了进年，直到天数小于该月份的天数
-	int totalday = day + _day;
-	while (totalday >= GetMonthDay(_year, _month))
+	_day += day;
+	while (_day > GetMonthDay(_year, _month))
 	{
-		if (_month <= 12)
-		{
-			totalday -= GetMonthDay(_year,_month);
-			_month++;
-		}
-		else
+		_day -= GetMonthDay(_year, _month);
+		++_month;
+		if (_month == 13)
 		{
 			_year++;
 			_month = 1;
 		}
 	}
-	_day = totalday;
 	return *this;
+	////要满了就进月数，月数满了进年，直到天数小于该月份的天数
+	//int totalday = day + _day;
+	//while (totalday >= GetMonthDay(_year, _month))
+	//{
+	//	if (_month <= 12)
+	//	{
+	//		totalday -= GetMonthDay(_year,_month);
+	//		_month++;
+	//	}
+	//	else
+	//	{
+	//		_year++;
+	//		_month = 1;
+	//	}
+	//}
+	//_day = totalday;
+	//return *this;
 }
 // 日期+天数
 Date Date::operator+(int day)
@@ -125,6 +137,7 @@ Date Date::operator-(int day)//原理同+
 	return ret;
 }
 // 前置++(不做改变)
+//自定义类型最好还是用前置比较好，后置++需要拷贝构造两次
 Date& Date::operator++()
 {
 	*this += 1;
@@ -133,9 +146,9 @@ Date& Date::operator++()
 //后置++
 Date Date::operator++(int)
 {
-	Date ret = *this;
+	Date ret = *this;//拷贝构造
 	*this += 1;
-	return ret;
+	return ret;//返回时会拷贝构造
 }
 //前置--
 Date& Date::operator--()
