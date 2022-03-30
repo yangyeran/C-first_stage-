@@ -203,14 +203,14 @@ int Date::operator-(const Date& d)
 {
 	Date max = *this;
 	Date min = d;
-	int flag = 1;
-	int count = 0;
-	if (*this < d)//第二个日期大
+	int flag = 1;//默认第一个日期大于第二个日期
+	if (*this < d)//如果第二个日期大
 	{
 		max = d;
 		min = *this;
 		flag = -1;
 	}
+	int count = 0;
 	while (min != max)
 	{
 		++min;
