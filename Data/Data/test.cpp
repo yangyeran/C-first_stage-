@@ -50,12 +50,14 @@ void test2()//ÔËËã·ûÖØÔØ
 void test3()
 {
 	Date d4(2022, 1, 19);
-	d4 -= 30;
+	Date d5 = 2022-1-1;
+	/*d4 -= 30;*/
 	d4.Print();
+	d5.Print();
 }
 int main()
 {
-	test1();
+	//test1();
 	//test2();
-	//test3();
+	test3();
 }
