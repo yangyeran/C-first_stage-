@@ -143,6 +143,7 @@ void fun4()
 	}
 	cout << endl;
 }
+<<<<<<< HEAD
 void fun5()
 {
 	//find不是vector的成员接口，是算法库里面的，使用时必须包含头文件 #include<algorithm>
@@ -159,4 +160,9 @@ void fun5()
 int main()
 {
 	fun5();
+=======
+int main()
+{
+	fun4();
+>>>>>>> 4a25902c9d783dc3d29bd9e1eb2b2f69ac167fb1
 }
