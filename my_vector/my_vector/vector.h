@@ -20,7 +20,11 @@ namespace yyr
 			, _finish(nullptr)
 			, _endofstorage(nullptr)
 		{
-			resize(n, val);
+			reserve(n);
+			while (n--)
+			{
+				push_back(value);
+			}
 		}
 		//3.µü´úÆ÷¹¹Ôì
 		template<class InputIterator>
