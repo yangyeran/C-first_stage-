@@ -21,11 +21,15 @@ namespace yyr
 			, _endofstorage(nullptr)
 		{
 <<<<<<< HEAD
+<<<<<<< HEAD
 			reserve(n);
 			while (n--)
 			{
 				push_back(value);
 			}
+=======
+			resize(n, val);
+>>>>>>> 343a2cf743f26f18deca282dd596ef4ba981c14d
 =======
 			resize(n, val);
 >>>>>>> 343a2cf743f26f18deca282dd596ef4ba981c14d
