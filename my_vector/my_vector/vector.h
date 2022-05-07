@@ -20,19 +20,13 @@ namespace yyr
 			, _finish(nullptr)
 			, _endofstorage(nullptr)
 		{
-<<<<<<< HEAD
-<<<<<<< HEAD
 			reserve(n);
 			while (n--)
 			{
-				push_back(value);
+				push_back(val);
 			}
-=======
 			resize(n, val);
->>>>>>> 343a2cf743f26f18deca282dd596ef4ba981c14d
-=======
 			resize(n, val);
->>>>>>> 343a2cf743f26f18deca282dd596ef4ba981c14d
 		}
 		//3.迭代器构造
 		template<class InputIterator>
@@ -64,12 +58,6 @@ namespace yyr
 			swap(v);
 			return *this;
 		}
-		/*vector<T>& operator=(const vector<T>& v)
-		{
-			vector<T> tmp(v);
-			swap(v);
-			return *this;
-		}*/
 		//begin和end
 		iterator begin()
 		{
@@ -126,14 +114,17 @@ namespace yyr
 			{
 				T* temp = new T[n];
 				size_t sz = size();
-				//for (size_t i = 0; i < size(); ++i)
-				//{
-				//	temp[i] = _start[i];
-				//}
 				if (_start)
 				{
 					//拷贝T类型的size个字节
-					memcpy(temp, _start,sizeof(T)*size());
+					//使用memcpy会有浅拷贝的问题，如果vector的成员是string类，就会导致同一块空间被释放两次从而发生错误
+					//memcpy(temp, _start,sizeof(T)*size());
+					for (size_t i = 0; i < sz; ++i)
+					{
+						//如果是内置类型int这样的，一个一个拷贝没有问题
+						//如果T是自定义类型会去调用T的拷贝构造
+						temp[i] = _start[i];
+					}
 					delete[] _start;
 				}
 				_start=temp;
