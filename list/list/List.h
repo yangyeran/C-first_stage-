@@ -148,7 +148,11 @@ namespace yyr
 			_head->_next = _head;
 			_head->_prev = _head;
 		}
-		list(size_t n,const T& val= T())
+		//下面两个函数的时候，有时候会出现编译器匹配出错
+		//用list<int> 来举例子
+		//1的两个参数类型一个是unsigned int，int
+		//2的是两个int，会发现下面的更匹配，解决方法实现一个int的版本
+		list(int n, const T& val = T())//改,有现成的不会去匹配模板
 		{
 			//构造n个T类型的节点
 			_head = new list_node();
@@ -161,7 +165,20 @@ namespace yyr
 				_head->_prev = newnode;
 			}
 		}
-		template<class InputIterator>
+		list(size_t n,const T& val= T())//1
+		{
+			//构造n个T类型的节点
+			_head = new list_node();
+			for (size_t i = 0; i < n; ++i)
+			{
+				list_node* newnode = new list_node(val);
+				_head->_next = newnode;
+				newnode->_prev = _head;
+				newnode->_next = _head;
+				_head->_prev = newnode;
+			}
+		}
+		template<class InputIterator>//2
 		list(InputIterator first, InputIterator end)
 		{
 			_head = new list_node();
@@ -234,8 +251,8 @@ namespace yyr
 		}
 		T& front()
 		{
-			//返回的是第一个的引用
-			//begin返回的是list_node* 是节点的指针，所以解引用返回节点的引用
+			//front返回的是第一个位置的数据
+			//这里的*是被重载之后的，可以拿到T _date
 			return *(begin());
 		}
 		const T& front() const
@@ -267,12 +284,12 @@ namespace yyr
 		}
 		void pop_front(const T& val)
 		{
-			erase(begin(), val);
+			erase(begin());
 		}
 		void pop_back(const T& val)
 		{
 			//尾删的时候end()指向的是最后一个元素的下一个位置，也就是头结点
-			erase(--end(), val);
+			erase(--end());
 		}
 		iterator insert(iterator pos,const T& val=T())
 		{
