@@ -312,7 +312,7 @@ namespace yyr
 			}
 			return true;
 		}
-		void Find(const Key& key)
+		Node* Find(const Key& key)
 		{
 			Node* cur = _root;
 			while (cur)
@@ -327,12 +327,10 @@ namespace yyr
 				}
 				else
 				{
-					cout << cur->_value << endl;
-					return;
+					return cur;
 				}
 			}
-			cout << "don't find" << endl;
-			return ;
+			return nullptr;
 		}
 		void Medium_Order()
 		{
@@ -412,7 +410,7 @@ namespace yyr
 			if (root == nullptr)
 				return;
 			_Medium_Order(root->_left);
-			cout << root->_key << " ";
+			cout << root->_key <<":" << root->_value<<" ";
 			_Medium_Order(root->_right);
 		}
 	private:
@@ -421,6 +419,46 @@ namespace yyr
 
 }
 
+void TestBSTree()
+{
+	yyr::BSTree<string, string> dict;
+	dict.insert("insert", "²åÈë");
+	dict.insert("erase", "É¾³ý");
+	dict.insert("left", "×ó±ß");
+	dict.insert("string", "×Ö·û´®");
+
+	//string str;
+	//while (cin >> str)
+	//{
+	//	auto ret = dict.Find(str);
+	//	if (ret)
+	//	{
+	//		cout << str << ":" << ret->_value << endl;
+	//	}
+	//	else
+	//	{
+	//		cout << "µ¥´ÊÆ´Ð´´íÎó" << endl;
+	//	}
+	//}
+
+	string strs[] = { "Æ»¹û", "Î÷¹Ï", "Æ»¹û", "Ó£ÌÒ", "Æ»¹û", "Ó£ÌÒ", "Æ»¹û", "Ó£ÌÒ", "Æ»¹û" };
+	// Í³¼ÆË®¹û³öÏÖµÄ´Î
+	yyr::BSTree<string, int> countTree;
+	for (auto str : strs)
+	{
+		auto ret = countTree.Find(str);
+		if (ret == nullptr)
+		{
+			countTree.insert(str, 1);
+		}
+		else
+		{
+			ret->_value++;
+		}
+	}
+	
+	countTree.Medium_Order();
+}
 
 void fun1()
 {
