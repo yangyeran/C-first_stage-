@@ -29,11 +29,14 @@ public:
 	{
 		return _ht.find(k);
 	}
+<<<<<<< HEAD
 	Value& operator[](const Key& k)
 	{
 		pair<iterator, bool> ret = insert(make_pair(k, Value()));
 		return ret.first->second;
 	}
+=======
+>>>>>>> 7823ce1e6704ba4523192e8a4588b352f7a11c74
 private:
 	LinkHash::HashTable<Key, pair<Key,Value>, MapKeyofT> _ht;
 	//ClosedHash::HashTable<Key, Key, MapKeyofT> _ht;
